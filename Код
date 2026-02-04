@@ -1,0 +1,71 @@
+#define FORWARD 'F'//вперед
+#define BACKWARD 'B'//назд
+#define LEFT 'L'//влево
+#define RIGHT 'R'//вправо
+#define CIRCLE 'C'//окружность
+#define CROSS 'X'//крест
+#define TRIANGLE 'T'//треугольни
+#define SQUARE 'S'//квадрат
+#define START 'A'//начало
+#define PAUSE 'P'//конец
+#include <Servo.h>
+Servo M1;
+Servo M2;
+Servo M3;
+
+void setup() {
+  M1.attach(6);
+  pinMode(6, OUTPUT);
+  M2.attach(5);
+  pinMode(5, OUTPUT);
+  M3.attach(7);
+  pinMode(7, OUTPUT);
+  Serial.begin(9600);  
+}
+
+void loop() {
+  if (Serial.available()) {
+    char command = Serial.read();
+    executeCommand(command);
+  }
+}
+
+void executeCommand(char command) {
+  switch (command) {
+    case FORWARD:
+       M1.writeMicroseconds(1300);
+       M2.writeMicroseconds(1300);
+      break;
+    case BACKWARD:
+       M1.writeMicroseconds(1700);
+        M2.writeMicroseconds(1700);
+      break;
+    case LEFT:
+      M1.writeMicroseconds(1700);
+      M2.writeMicroseconds(1300);
+      break;
+    case RIGHT:
+      M1.writeMicroseconds(1300);
+      M2.writeMicroseconds(1700);
+      break;
+    case CIRCLE:
+    M3.writeMicroseconds(1300);
+      break;
+    case CROSS:
+    M3.writeMicroseconds(1500);
+      break;
+    case TRIANGLE:
+      break;
+    case SQUARE:
+      M3.writeMicroseconds(1800);
+      break;
+    case START:     
+      break;
+    case PAUSE:
+          M1.writeMicroseconds(1500);
+        M2.writeMicroseconds(1500);
+      break;
+    default:
+      break;
+  }
+}
